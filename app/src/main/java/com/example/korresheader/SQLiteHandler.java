@@ -97,7 +97,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
      * Deletes the contact with the given name
      * @param name The name of the contact to delete
      */
-    private void deleteContact(String name) {
+    public void deleteContact(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         // Define 'where' part of query.
         String selection = FeedEntry.COLUMN_NAME_TITLE + " LIKE " + name;
