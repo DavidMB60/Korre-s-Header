@@ -1,4 +1,4 @@
-package com.example.korresheader;
+package com.example.korresheader.ui;
 
 import android.os.Bundle;
 
@@ -8,6 +8,7 @@ import android.view.View;
 
 import androidx.navigation.ui.AppBarConfiguration;
 
+import com.example.korresheader.R;
 import com.example.korresheader.databinding.ActivityMainBinding;
 
 import android.view.Menu;
