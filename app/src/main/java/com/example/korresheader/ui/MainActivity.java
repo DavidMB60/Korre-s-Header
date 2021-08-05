@@ -16,7 +16,6 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
     @Override
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.addNewContactMenu) {
-            return true;
+            // TODO: Invoke new contact activity
         }
 
         return super.onOptionsItemSelected(item);
