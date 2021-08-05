@@ -56,6 +56,15 @@ public class ContactRepository {
     }
 
     /**
+     * This checks if the given contact by name exist in the DB
+     * @param name The name of the contact
+     * @return True if exist or false if not.
+     */
+    public boolean checkIfContactExist(@NonNull String name) {
+        return bakingContactMap.containsKey(name);
+    }
+
+    /**
      * @return The quicksetList
      */
     public BehaviorSubject<HashMap<String, Contact>> getContactMap() {

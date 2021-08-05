@@ -1,6 +1,7 @@
 package com.example.korresheader.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,10 +10,16 @@ import android.view.MenuItem;
 import com.example.korresheader.Contact;
 import com.example.korresheader.R;
 import com.example.korresheader.databinding.ActivityContactViewBinding;
+import com.example.korresheader.viewmodel.ContactViewViewModel;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class ContactView extends AppCompatActivity {
 
+    //View binding
     private ActivityContactViewBinding binding;
+
+    //The ViewModel
+    private ContactViewViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +28,12 @@ public class ContactView extends AppCompatActivity {
         binding = ActivityContactViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // TODO: Check if we received a contact via Intent
-
-        initViews(null);
+        viewModel = new ViewModelProvider(this).get(ContactViewViewModel.class);
+        Contact contact = getIntent().getParcelableExtra(MainActivity.SELECTED_QUICKSET);
+        if (contact != null) {
+            viewModel.setContact(contact);
+            initViews(contact);
+        }
     }
 
     /**
@@ -31,9 +41,9 @@ public class ContactView extends AppCompatActivity {
      * @param contact The contact to retrieve the data
      */
     private void initViews(Contact contact) {
-        if (contact != null) {
-            // TODO: Set the data
-        }
+        binding.contactNameTextField.setPlaceholderText(contact.getName());
+        binding.contactPhoneTextField.setPlaceholderText(Integer.toString(contact.getPhoneNumber()));
+        binding.contactAgeTextField.setPlaceholderText(Integer.toString(contact.getAge()));
     }
 
     @Override
@@ -54,7 +64,9 @@ public class ContactView extends AppCompatActivity {
                 // TODO: Ask the user for confirmation and remove if necessary
                 break;
             case R.id.createContact:
-                // TODO: Create new contact or override an existing one
+                if (!viewModel.saveContact()) {
+                    // TODO: Create Alert
+                }
                 break;
             default:
                 // TODO: Send an alert of invalid option

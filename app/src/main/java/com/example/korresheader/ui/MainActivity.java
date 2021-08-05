@@ -15,8 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-
     private ActivityMainBinding binding;
+
+    public static final String SELECTED_QUICKSET = "selected_quickset";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
