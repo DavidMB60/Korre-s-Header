@@ -22,7 +22,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY," +
-                    FeedEntry.COLUMN_NAME_TITLE + " TEXT)";
+                    FeedEntry.COLUMN_NAME_TITLE + " TEXT,"
+                    + FeedEntry.COLUMN_PHONENUMBER_TITLE + " INTEGER, "
+                    + FeedEntry.COLUMN_AGE_TITLE + " INTEGER)";
 
     //Static variable that contains the SQL sentence to delete the table
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME;
@@ -56,9 +58,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
      * @param contact The contact to save
      */
     public void addContact(Contact contact) {
-        if (getContact(contact.getName())) {
-            deleteContact(contact.getName());
-        }
         try {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
@@ -114,10 +113,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         HashMap<String, Contact> contactHashMap = new HashMap<>();
         try {
             SQLiteDatabase db = this.getReadableDatabase();
-            String[] projection = {FeedEntry.COLUMN_NAME_TITLE};
-            Cursor cursor = db.query(FeedEntry.TABLE_NAME,
-                    projection, null, null,
-                    null, null, null);
+            Cursor cursor = db.rawQuery("SELECT * FROM " + FeedEntry.TABLE_NAME, null);
             while (cursor.moveToNext()) {
                 contactHashMap.put(cursor.getString(1),
                         new Contact(cursor.getString(1),

@@ -3,6 +3,7 @@ package com.example.korresheader.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
@@ -32,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     //ViewModel
     private HomeActivityViewModel viewModel;
 
+    //The adapter for the RecyclerView
     private ContactAdapter contactAdapter;
 
     @Override
@@ -41,8 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         initList();
         viewModel = new ViewModelProvider(this).get(HomeActivityViewModel.class);
         viewModel.setContext(getApplicationContext());
-        viewModel.getContacts().observe(this, contacts ->
-                contactAdapter.setContactList(contacts));
+        observeModel();
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
         binding.addNewContactButton.setOnClickListener(new View.OnClickListener() {
@@ -59,9 +60,16 @@ public class HomeActivity extends AppCompatActivity {
     private void initList() {
         contactAdapter = new ContactAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        binding.recyclerView.setLayoutManager(linearLayoutManager);
-        binding.recyclerView.setAdapter(contactAdapter);
-        binding.recyclerView.addItemDecoration(new StickyRecyclerHeadersDecoration(contactAdapter));
+        binding.contactList.setLayoutManager(linearLayoutManager);
+        binding.contactList.setAdapter(contactAdapter);
+        binding.contactList.addItemDecoration(new StickyRecyclerHeadersDecoration(contactAdapter));
+    }
+
+    /**
+     * This method calls for observer the model
+     */
+    private void observeModel() {
+        viewModel.getContacts().observe(this, contactAdapter::setContactList);
     }
 
     @Override
@@ -84,6 +92,20 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // FIXME: This is stupid and shouldn't be done :/ but it won't update unless I do this
+        observeModel();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // FIXME: This is stupid and shouldn't be done :/ but it won't update unless I do this
+        observeModel();
     }
 
     @Override

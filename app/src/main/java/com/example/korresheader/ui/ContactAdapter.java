@@ -26,8 +26,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
      * @param contactList The list of contacts
      */
     public void setContactList(List<Contact> contactList) {
+        // FIXME: For some reason this won't "update" the UI itself.
         this.contactList = contactList;
-        notifyDataSetChanged();
+        this.notifyDataSetChanged();
     }
 
     @NonNull

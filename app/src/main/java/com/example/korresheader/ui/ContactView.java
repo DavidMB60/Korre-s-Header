@@ -41,14 +41,8 @@ public class ContactView extends AppCompatActivity {
      */
     private void initViews(Contact contact) {
         binding.contactNameTextField.setPlaceholderText(contact.getName());
-        binding.contactNameTextField.addOnEditTextAttachedListener(textInputLayout ->
-                viewModel.setContactName(textInputLayout.getEditText().toString()));
         binding.contactPhoneTextField.setPlaceholderText(Integer.toString(contact.getPhoneNumber()));
-        binding.contactPhoneTextField.addOnEditTextAttachedListener(textInputLayout ->
-                viewModel.setContactPhoneNumber(Integer.parseInt(textInputLayout.getEditText().toString())));
         binding.contactAgeTextField.setPlaceholderText(Integer.toString(contact.getAge()));
-        binding.contactAgeTextField.addOnEditTextAttachedListener(textInputLayout ->
-                viewModel.setContactAge(Integer.parseInt(textInputLayout.getEditText().toString())));
     }
 
     @Override
@@ -78,6 +72,14 @@ public class ContactView extends AppCompatActivity {
                         .show();
                 break;
             case R.id.createContact:
+                viewModel.setContactName(
+                        binding.contactNameTextField.getEditText().getText().toString());
+                viewModel.setContactPhoneNumber(
+                        Integer.parseInt(
+                                binding.contactPhoneTextField.getEditText().getText().toString()));
+                viewModel.setContactAge(
+                        Integer.parseInt(
+                                binding.contactAgeTextField.getEditText().getText().toString()));
                 if (!viewModel.saveContact()) {
                     new MaterialAlertDialogBuilder(getApplicationContext())
                             .setTitle(R.string.information_dialog)

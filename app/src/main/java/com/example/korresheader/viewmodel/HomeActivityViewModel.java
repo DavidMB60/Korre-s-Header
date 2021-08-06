@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.korresheader.Contact;
 import com.example.korresheader.ContactRepository;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,7 +42,7 @@ public class HomeActivityViewModel extends ViewModel {
                 .getContactMap().blockingLatest().iterator().next();
         // We add the Contact to the local contacts value
         List<Contact> listItems = hashMap.values().stream()
-                .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
+                .sorted(Comparator.comparing(o -> o.getName().toUpperCase()))
                 .collect(Collectors.toList());
         contacts.postValue(listItems);
     }

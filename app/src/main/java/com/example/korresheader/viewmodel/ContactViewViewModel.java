@@ -97,17 +97,20 @@ public class ContactViewViewModel extends ViewModel {
      */
     public boolean saveContact() {
        //First we check if there is a difference between the new or old data to decide to save or not
-       if (contactName != contactMutableLiveData.getValue().getName() &&
-       contactPhoneNumber != contactMutableLiveData.getValue().getPhoneNumber() &&
-       contactAge != contactMutableLiveData.getValue().getAge()) {
-           //We check if the Contact exist in the DB; in case it does we delete it
-           if (contactRepository.checkIfContactExist(contactMutableLiveData.getValue().getName())) {
-               contactRepository.deleteContact(contactMutableLiveData.getValue().getName());
-           }
-           contactRepository.setContact(prepareContact());
-           return true;
-       } else {
-           return false;
+        if (contactMutableLiveData.getValue() == null) {
+            contactRepository.setContact(prepareContact());
+            return true;
+        } else if (contactMutableLiveData != null && (contactName != contactMutableLiveData.getValue().getName() &&
+                contactPhoneNumber != contactMutableLiveData.getValue().getPhoneNumber() &&
+                contactAge != contactMutableLiveData.getValue().getAge())) {
+            //We check if the Contact exist in the DB; in case it does we delete it
+            if (contactRepository.checkIfContactExist(contactMutableLiveData.getValue().getName())) {
+                contactRepository.deleteContact(contactMutableLiveData.getValue().getName());
+            }
+            contactRepository.setContact(prepareContact());
+            return true;
+        } else {
+            return false;
        }
     }
 
