@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.korresheader.R;
 import com.example.korresheader.databinding.ActivityMainBinding;
 import com.example.korresheader.viewmodel.HomeActivityViewModel;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         binding.recyclerView.setLayoutManager(linearLayoutManager);
         binding.recyclerView.setAdapter(contactAdapter);
+        binding.recyclerView.addItemDecoration(new StickyRecyclerHeadersDecoration(contactAdapter));
     }
 
     @Override
