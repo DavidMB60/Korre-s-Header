@@ -29,7 +29,7 @@ public class ContactView extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         viewModel = new ViewModelProvider(this).get(ContactViewViewModel.class);
-        Contact contact = getIntent().getParcelableExtra(MainActivity.SELECTED_QUICKSET);
+        Contact contact = getIntent().getParcelableExtra(HomeActivity.SELECTED_QUICKSET);
         if (contact != null) {
             viewModel.setContact(contact);
             initViews(contact);
