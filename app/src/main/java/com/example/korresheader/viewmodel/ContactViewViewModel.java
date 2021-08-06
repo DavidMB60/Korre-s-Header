@@ -30,10 +30,9 @@ public class ContactViewViewModel extends ViewModel {
 
     /**
      * Constructor
-     * @param context The context for the SQLite
      */
-    public ContactViewViewModel(Context context) {
-        contactRepository = new ContactRepository(context);
+    public ContactViewViewModel() {
+
     }
 
     /**
@@ -125,5 +124,13 @@ public class ContactViewViewModel extends ViewModel {
      */
     public void setContact(Contact contact) {
         contactMutableLiveData.setValue(contact);
+    }
+
+    /**
+     * Set the context for the Repository
+     * @param context The context
+     */
+    public void setContext(Context context) {
+        contactRepository = new ContactRepository(context);
     }
 }

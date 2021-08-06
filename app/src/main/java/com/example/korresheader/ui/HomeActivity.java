@@ -37,9 +37,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initList();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        initList();
         viewModel = new ViewModelProvider(this).get(HomeActivityViewModel.class);
+        viewModel.setContext(getApplicationContext());
         viewModel.getContacts().observe(this, contacts ->
                 contactAdapter.setContactList(contacts));
         setContentView(binding.getRoot());

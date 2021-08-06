@@ -24,11 +24,10 @@ public class ContactView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityContactViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         viewModel = new ViewModelProvider(this).get(ContactViewViewModel.class);
+        viewModel.setContext(getApplicationContext());
         Contact contact = getIntent().getParcelableExtra(HomeActivity.SELECTED_QUICKSET);
         if (contact != null) {
             viewModel.setContact(contact);

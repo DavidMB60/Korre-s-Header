@@ -24,8 +24,7 @@ public class HomeActivityViewModel extends ViewModel {
 
     private Disposable contactsDisposable;
 
-    public HomeActivityViewModel(Context context) {
-        contactRepository = new ContactRepository(context);
+    public HomeActivityViewModel() {
         contactsDisposable = contactRepository.getContactMap().subscribe(o -> updateContacts());
     }
 
@@ -47,5 +46,13 @@ public class HomeActivityViewModel extends ViewModel {
      */
     public LiveData<List<Contact>> getContacts() {
         return contacts;
+    }
+
+    /**
+     * Set the context for the Repository
+     * @param context The context
+     */
+    public void setContext(Context context) {
+        contactRepository = new ContactRepository(context);
     }
 }
