@@ -37,13 +37,19 @@ public class ContactView extends AppCompatActivity {
     }
 
     /**
-     * We establish the data of the different fields if a contact is given
+     * We establish the data of the different fields if a contact is given and create the listeners
      * @param contact The contact to retrieve the data
      */
     private void initViews(Contact contact) {
         binding.contactNameTextField.setPlaceholderText(contact.getName());
+        binding.contactNameTextField.addOnEditTextAttachedListener(textInputLayout ->
+                viewModel.setContactName(textInputLayout.getEditText().toString()));
         binding.contactPhoneTextField.setPlaceholderText(Integer.toString(contact.getPhoneNumber()));
+        binding.contactPhoneTextField.addOnEditTextAttachedListener(textInputLayout ->
+                viewModel.setContactPhoneNumber(Integer.parseInt(textInputLayout.getEditText().toString())));
         binding.contactAgeTextField.setPlaceholderText(Integer.toString(contact.getAge()));
+        binding.contactAgeTextField.addOnEditTextAttachedListener(textInputLayout ->
+                viewModel.setContactAge(Integer.parseInt(textInputLayout.getEditText().toString())));
     }
 
     @Override
@@ -61,16 +67,21 @@ public class ContactView extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.deleteContact:
-                // TODO: Ask the user for confirmation and remove if necessary
+                new MaterialAlertDialogBuilder(getApplicationContext())
+                        .setTitle(R.string.information_dialog)
+                        .setMessage(R.string.information_dialog_text)
+                        .setPositiveButton(R.string.ok, (dialog, which) -> viewModel.deleteContact())
+                        .setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss())
+                        .show();
                 break;
             case R.id.createContact:
                 if (!viewModel.saveContact()) {
-                    // TODO: Create Alert
+                    new MaterialAlertDialogBuilder(getApplicationContext())
+                            .setTitle(R.string.information_dialog)
+                            .setMessage(R.string.information_dialog_text)
+                            .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                            .show();
                 }
-                break;
-            default:
-                // TODO: Send an alert of invalid option
-                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

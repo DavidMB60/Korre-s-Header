@@ -113,6 +113,13 @@ public class ContactViewViewModel extends ViewModel {
     }
 
     /**
+     * Deletes the current contact
+     */
+    public void deleteContact() {
+        contactRepository.deleteContact(contactName);
+    }
+
+    /**
      * Establish the value for the contact
      * @param contact The contact
      */
