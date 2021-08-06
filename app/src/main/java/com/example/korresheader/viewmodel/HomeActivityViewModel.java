@@ -11,21 +11,26 @@ import com.example.korresheader.ContactRepository;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
 public class HomeActivityViewModel extends ViewModel {
 
+    //The LiveData for the contacts
     private final MutableLiveData<List<Contact>> contacts = new MutableLiveData<>();
 
+    //The repository
     private ContactRepository contactRepository;
 
+    //The disposable for the Contacts
     private Disposable contactsDisposable;
 
+    /**
+     * Constructor
+     */
     public HomeActivityViewModel() {
-        contactsDisposable = contactRepository.getContactMap().subscribe(o -> updateContacts());
+
     }
 
     /**
@@ -54,5 +59,13 @@ public class HomeActivityViewModel extends ViewModel {
      */
     public void setContext(Context context) {
         contactRepository = new ContactRepository(context);
+        startDisposable();
+    }
+
+    /**
+     * This method starts the disposable
+     */
+    private void startDisposable() {
+        contactsDisposable = contactRepository.getContactMap().subscribe(o -> updateContacts());
     }
 }
