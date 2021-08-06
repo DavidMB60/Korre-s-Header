@@ -54,7 +54,11 @@ public class ContactView extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_contact_view, menu);
+        if (getIntent().getParcelableExtra(HomeActivity.SELECTED_QUICKSET) != null) {
+            getMenuInflater().inflate(R.menu.menu_contact_view, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_contact_view_new_contact, menu);
+        }
         return true;
     }
 
