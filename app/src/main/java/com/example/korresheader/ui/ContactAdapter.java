@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.korresheader.Contact;
+import com.example.korresheader.util.Contact;
 import com.example.korresheader.R;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
@@ -20,6 +20,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     //A local value for the contacts
     private List<Contact> contactList;
+
+    /**
+     * Listener for the clicks on an item of the adapter:
+     */
+    OnItemClickedListener onItemClickedListener;
 
     /**
      * Establish the value of the list of contacts
@@ -66,6 +71,21 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         } else {
             return contactList.size();
         }
+    }
+
+    /**
+     * Sets the listener for the clicks on an item of the adapter:
+     */
+    public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+        this.onItemClickedListener = onItemClickedListener;
+    }
+
+    /**
+     * Interface for listening clicks in an item of the adapter.
+     */
+    interface OnItemClickedListener {
+
+        void onItemClicked(Contact item);
     }
 
     //Inner class for the HeaderViewHolder

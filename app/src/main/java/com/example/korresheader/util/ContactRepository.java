@@ -1,13 +1,19 @@
-package com.example.korresheader;
+package com.example.korresheader.util;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.example.korresheader.SQLiteHandlerModule;
+
 import java.util.HashMap;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
+@Singleton
 public class ContactRepository {
 
     //This is the BehaviourSubject for the HashMap of the contacts in the DB
@@ -21,10 +27,11 @@ public class ContactRepository {
 
     /**
      * Constructor
-     * @param context The context for the SQLite
+     * @param sqLiteHandler
      */
-    public ContactRepository(Context context) {
-        this.sqLiteHandler = new SQLiteHandler(context);
+    @Inject
+    public ContactRepository(@SQLiteHandlerModule.Contact SQLiteHandler sqLiteHandler) {
+        this.sqLiteHandler = sqLiteHandler;
         bakingContactMap = new HashMap<>();
         getAllContacts();
     }

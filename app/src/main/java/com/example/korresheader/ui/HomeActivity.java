@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.korresheader.util.Contact;
 import com.example.korresheader.R;
 import com.example.korresheader.databinding.ActivityMainBinding;
 import com.example.korresheader.viewmodel.HomeActivityViewModel;
@@ -20,15 +20,16 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import io.reactivex.rxjava3.disposables.Disposable;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class HomeActivity extends AppCompatActivity {
 
     //View binding
     private ActivityMainBinding binding;
 
     //Static value for the Intent when opening a contact
-    public static final String SELECTED_QUICKSET = "selected_quickset";
+    public static final String SELECTED_CONTACT = "selected_contact";
 
     //ViewModel
     private HomeActivityViewModel viewModel;
@@ -42,7 +43,6 @@ public class HomeActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         initList();
         viewModel = new ViewModelProvider(this).get(HomeActivityViewModel.class);
-        viewModel.setContext(getApplicationContext());
         observeModel();
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
@@ -60,9 +60,20 @@ public class HomeActivity extends AppCompatActivity {
     private void initList() {
         contactAdapter = new ContactAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        contactAdapter.setOnItemClickedListener(this::continueWithContact);
         binding.contactList.setLayoutManager(linearLayoutManager);
         binding.contactList.setAdapter(contactAdapter);
         binding.contactList.addItemDecoration(new StickyRecyclerHeadersDecoration(contactAdapter));
+    }
+
+    /**
+     * Method that invokes ContactView activity with the selected contact
+     * @param contact The selected contact
+     */
+    private void continueWithContact(Contact contact) {
+        Intent intent = new Intent(this, ContactView.class);
+        intent.putExtra(SELECTED_CONTACT, contact);
+        startActivity(intent);
     }
 
     /**
@@ -97,15 +108,11 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        // FIXME: This is stupid and shouldn't be done :/ but it won't update unless I do this
-        observeModel();
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        // FIXME: This is stupid and shouldn't be done :/ but it won't update unless I do this
-        observeModel();
     }
 
     @Override

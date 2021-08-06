@@ -1,4 +1,4 @@
-package com.example.korresheader;
+package com.example.korresheader.util;
 
 import android.content.ContentValues;
 import android.content.Context;

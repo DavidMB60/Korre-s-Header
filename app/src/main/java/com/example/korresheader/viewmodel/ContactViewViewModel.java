@@ -5,12 +5,14 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.korresheader.Contact;
-import com.example.korresheader.ContactRepository;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.example.korresheader.util.Contact;
+import com.example.korresheader.util.ContactRepository;
 
-import io.reactivex.rxjava3.disposables.Disposable;
+import javax.inject.Inject;
 
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class ContactViewViewModel extends ViewModel {
 
     //The name of the contact
@@ -31,8 +33,9 @@ public class ContactViewViewModel extends ViewModel {
     /**
      * Constructor
      */
-    public ContactViewViewModel() {
-
+    @Inject
+    public ContactViewViewModel(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
     }
 
     /**
@@ -130,10 +133,10 @@ public class ContactViewViewModel extends ViewModel {
     }
 
     /**
-     * Set the context for the Repository
-     * @param context The context
+     * Returns the LiveData of the actual Contact
+     * @return The contact
      */
-    public void setContext(Context context) {
-        contactRepository = new ContactRepository(context);
+    public MutableLiveData<Contact> getContactMutableLiveData() {
+        return contactMutableLiveData;
     }
 }

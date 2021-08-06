@@ -6,16 +6,20 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.korresheader.Contact;
-import com.example.korresheader.ContactRepository;
+import com.example.korresheader.util.Contact;
+import com.example.korresheader.util.ContactRepository;
 
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.disposables.Disposable;
 
+@HiltViewModel
 public class HomeActivityViewModel extends ViewModel {
 
     //The LiveData for the contacts
@@ -30,8 +34,10 @@ public class HomeActivityViewModel extends ViewModel {
     /**
      * Constructor
      */
-    public HomeActivityViewModel() {
-
+    @Inject
+    public HomeActivityViewModel(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+        startDisposable();
     }
 
     /**
@@ -52,15 +58,6 @@ public class HomeActivityViewModel extends ViewModel {
      */
     public LiveData<List<Contact>> getContacts() {
         return contacts;
-    }
-
-    /**
-     * Set the context for the Repository
-     * @param context The context
-     */
-    public void setContext(Context context) {
-        contactRepository = new ContactRepository(context);
-        startDisposable();
     }
 
     /**

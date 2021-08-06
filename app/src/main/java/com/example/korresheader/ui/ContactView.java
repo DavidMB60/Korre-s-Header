@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.korresheader.Contact;
+import com.example.korresheader.util.Contact;
 import com.example.korresheader.R;
 import com.example.korresheader.databinding.ActivityContactViewBinding;
 import com.example.korresheader.viewmodel.ContactViewViewModel;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ContactView extends AppCompatActivity {
 
     //View binding
@@ -27,11 +30,10 @@ public class ContactView extends AppCompatActivity {
         binding = ActivityContactViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(ContactViewViewModel.class);
-        viewModel.setContext(getApplicationContext());
-        Contact contact = getIntent().getParcelableExtra(HomeActivity.SELECTED_QUICKSET);
+        viewModel.getContactMutableLiveData().observe(this, this::initViews);
+        Contact contact = getIntent().getParcelableExtra(HomeActivity.SELECTED_CONTACT);
         if (contact != null) {
             viewModel.setContact(contact);
-            initViews(contact);
         }
     }
 
@@ -48,7 +50,7 @@ public class ContactView extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (getIntent().getParcelableExtra(HomeActivity.SELECTED_QUICKSET) != null) {
+        if (getIntent().getParcelableExtra(HomeActivity.SELECTED_CONTACT) != null) {
             getMenuInflater().inflate(R.menu.menu_contact_view, menu);
         } else {
             getMenuInflater().inflate(R.menu.menu_contact_view_new_contact, menu);
@@ -80,7 +82,9 @@ public class ContactView extends AppCompatActivity {
                 viewModel.setContactAge(
                         Integer.parseInt(
                                 binding.contactAgeTextField.getEditText().getText().toString()));
-                if (!viewModel.saveContact()) {
+                if (viewModel.saveContact()) {
+                    finish();
+                } else {
                     new MaterialAlertDialogBuilder(getApplicationContext())
                             .setTitle(R.string.information_dialog)
                             .setMessage(R.string.information_dialog_text)
@@ -90,5 +94,11 @@ public class ContactView extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
