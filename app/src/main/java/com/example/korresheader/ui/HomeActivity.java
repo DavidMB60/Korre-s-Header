@@ -42,7 +42,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         initList();
-        viewModel = new ViewModelProvider(this).get(HomeActivityViewModel.class);
         observeModel();
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
@@ -80,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
      * This method calls for observer the model
      */
     private void observeModel() {
+        viewModel = new ViewModelProvider(this).get(HomeActivityViewModel.class);
         viewModel.getContacts().observe(this, contactAdapter::setContactList);
     }
 

@@ -35,8 +35,8 @@ public class HomeActivityViewModel extends ViewModel {
      * Constructor
      */
     @Inject
-    public HomeActivityViewModel(ContactRepository contactRepository) {
-        this.contactRepository = contactRepository;
+    public HomeActivityViewModel(ContactRepository contactSQLiteHandler) {
+        this.contactRepository = contactSQLiteHandler;
         startDisposable();
     }
 

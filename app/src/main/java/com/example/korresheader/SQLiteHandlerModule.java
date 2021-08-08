@@ -22,8 +22,8 @@ public class SQLiteHandlerModule {
 
     /**
      * Hilt provider that build instances
-     * @param context
-     * @return
+     * @param context The context of the application
+     * @return A new SQLiteHandler
      */
     @Provides
     @Contact
