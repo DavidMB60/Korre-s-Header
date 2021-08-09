@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.korresheader.util.Contact;
 import com.example.korresheader.R;
+import com.example.korresheader.util.Contact;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.List;
@@ -68,9 +68,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     }
 
     //Inner class for the HeaderViewHolder
-    protected class HeaderViewHolder extends RecyclerView.ViewHolder {
+    protected static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView header;
+        private final TextView header;
 
         public HeaderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,9 +79,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     }
 
     //Inner class for the ContactName ViewHolder
-    protected class ContactViewHolder extends RecyclerView.ViewHolder {
+    protected static class ContactViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView contact;
+        private final TextView contact;
 
         public ContactViewHolder(@NonNull View itemView) {
             super(itemView);

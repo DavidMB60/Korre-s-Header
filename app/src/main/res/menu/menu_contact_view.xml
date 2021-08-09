@@ -7,7 +7,7 @@
         android:icon="@android:drawable/ic_menu_delete"
         app:showAsAction="always" />
     <item
-        android:id="@+id/createContact"
+        android:id="@+id/overwriteContact"
         android:icon="@android:drawable/ic_menu_edit"
         app:showAsAction="always" />
 </menu>

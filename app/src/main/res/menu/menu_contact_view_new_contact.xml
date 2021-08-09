@@ -4,6 +4,6 @@
 
     <item
         android:id="@+id/createContact"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@android:drawable/ic_menu_add"
         app:showAsAction="always" />
 </menu>

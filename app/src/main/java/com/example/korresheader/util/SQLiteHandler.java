@@ -10,6 +10,7 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+//Class that will make the necessary operations to the SQLite DB on the phone
 public class SQLiteHandler extends SQLiteOpenHelper {
 
     //Static variable to establish the DB version

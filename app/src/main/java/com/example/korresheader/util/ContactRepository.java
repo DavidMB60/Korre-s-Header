@@ -1,7 +1,5 @@
 package com.example.korresheader.util;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import com.example.korresheader.SQLiteHandlerModule;
@@ -23,11 +21,11 @@ public class ContactRepository {
     private HashMap<String, Contact> bakingContactMap;
 
     //The SQLiteHandler
-    private SQLiteHandler sqLiteHandler;
+    private final SQLiteHandler sqLiteHandler;
 
     /**
      * Constructor
-     * @param sqLiteHandler
+     * @param sqLiteHandler The SQLiteHandler for the save and delete operations
      */
     @Inject
     public ContactRepository(@SQLiteHandlerModule.Contact SQLiteHandler sqLiteHandler) {

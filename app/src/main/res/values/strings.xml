@@ -4,12 +4,12 @@
     <string name="contact_name">Contact name:</string>
     <string name="contact_phone_number">Contact phone number:</string>
     <string name="contact_age">Contact age</string>
-    <string name="information_dialog">Information</string>
-    <string name="information_dialog_text">There isn\'t new information to save</string>
     <string name="no">No</string>
     <string name="ok">OK</string>
     <string name="info_not_filled">Error</string>
     <string name="info_not_filled_text">You didn\'t completed all TextFields</string>
     <string name="delete_dialog">Delete</string>
     <string name="delete_dialog_text">Are you sure you want to remove this Contact?</string>
+    <string name="overwrite_dialog">Overwrite</string>
+    <string name="overwrite_dialog_text">Are you sure you want to overwrite the data of this Contact?</string>
 </resources>

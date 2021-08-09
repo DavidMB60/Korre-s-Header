@@ -2,23 +2,20 @@ package com.example.korresheader.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.korresheader.util.Contact;
 import com.example.korresheader.R;
 import com.example.korresheader.databinding.ActivityMainBinding;
+import com.example.korresheader.util.Contact;
 import com.example.korresheader.viewmodel.HomeActivityViewModel;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
-
-import android.view.Menu;
-import android.view.MenuItem;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -45,12 +42,8 @@ public class HomeActivity extends AppCompatActivity {
         observeModel();
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
-        binding.addNewContactButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ContactView.class));
-            }
-        });
+        binding.addNewContactButton.setOnClickListener(view ->
+                startActivity(new Intent(getApplicationContext(), ContactView.class)));
     }
 
     /**

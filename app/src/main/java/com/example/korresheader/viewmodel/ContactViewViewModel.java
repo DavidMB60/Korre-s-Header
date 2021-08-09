@@ -1,7 +1,5 @@
 package com.example.korresheader.viewmodel;
 
-import android.content.Context;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -25,10 +23,10 @@ public class ContactViewViewModel extends ViewModel {
     private int contactAge;
 
     //The repository to save and delete contacts
-    private ContactRepository contactRepository;
+    private final ContactRepository contactRepository;
 
     //The LiveData with the data of the opened Contact
-    private MutableLiveData<Contact> contactMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Contact> contactMutableLiveData = new MutableLiveData<>();
 
     /**
      * Constructor
@@ -100,17 +98,14 @@ public class ContactViewViewModel extends ViewModel {
      */
     public boolean saveContact() {
         //First we check the LiveData, in case it's null then we know that it's a new Contact for sure
-        if (contactMutableLiveData.getValue() == null) {
-            contactRepository.setContact(prepareContact());
-            return true;
-        } else {
+        if (contactMutableLiveData.getValue() != null) {
             //We check if the Contact exist in the DB; in case it does we delete it
             if (contactRepository.checkIfContactExist(contactMutableLiveData.getValue().getName())) {
                 contactRepository.deleteContact(contactMutableLiveData.getValue().getName());
             }
-            contactRepository.setContact(prepareContact());
-            return true;
         }
+        contactRepository.setContact(prepareContact());
+        return true;
     }
 
     /**

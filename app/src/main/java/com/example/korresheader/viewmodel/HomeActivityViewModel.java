@@ -1,7 +1,5 @@
 package com.example.korresheader.viewmodel;
 
-import android.content.Context;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -26,7 +24,7 @@ public class HomeActivityViewModel extends ViewModel {
     private final MutableLiveData<List<Contact>> contacts = new MutableLiveData<>();
 
     //The repository
-    private ContactRepository contactRepository;
+    private final ContactRepository contactRepository;
 
     //The disposable for the Contacts
     private Disposable contactsDisposable;
