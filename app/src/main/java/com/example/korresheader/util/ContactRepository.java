@@ -60,6 +60,8 @@ public class ContactRepository {
      */
     public void deleteContact(@NonNull String name) {
         sqLiteHandler.deleteContact(name);
+        bakingContactMap.remove(name);
+        contactMap.onNext(bakingContactMap);
     }
 
     /**

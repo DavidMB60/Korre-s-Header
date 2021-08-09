@@ -22,16 +22,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     private List<Contact> contactList;
 
     /**
-     * Listener for the clicks on an item of the adapter:
-     */
-    OnItemClickedListener onItemClickedListener;
-
-    /**
      * Establish the value of the list of contacts
      * @param contactList The list of contacts
      */
     public void setContactList(List<Contact> contactList) {
-        // FIXME: For some reason this won't "update" the UI itself.
         this.contactList = contactList;
         this.notifyDataSetChanged();
     }
@@ -71,21 +65,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         } else {
             return contactList.size();
         }
-    }
-
-    /**
-     * Sets the listener for the clicks on an item of the adapter:
-     */
-    public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
-        this.onItemClickedListener = onItemClickedListener;
-    }
-
-    /**
-     * Interface for listening clicks in an item of the adapter.
-     */
-    interface OnItemClickedListener {
-
-        void onItemClicked(Contact item);
     }
 
     //Inner class for the HeaderViewHolder

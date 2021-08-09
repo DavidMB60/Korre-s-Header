@@ -59,10 +59,23 @@ public class HomeActivity extends AppCompatActivity {
     private void initList() {
         contactAdapter = new ContactAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        contactAdapter.setOnItemClickedListener(this::continueWithContact);
         binding.contactList.setLayoutManager(linearLayoutManager);
         binding.contactList.setAdapter(contactAdapter);
         binding.contactList.addItemDecoration(new StickyRecyclerHeadersDecoration(contactAdapter));
+        binding.contactList.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(),binding.contactList,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        continueWithContact(viewModel.getContacts().getValue().get(position));
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        //We don't do anything
+                    }
+                })
+        );
     }
 
     /**

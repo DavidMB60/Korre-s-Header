@@ -1,5 +1,6 @@
 package com.example.korresheader.ui;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -42,9 +43,9 @@ public class ContactView extends AppCompatActivity {
      * @param contact The contact to retrieve the data
      */
     private void initViews(Contact contact) {
-        binding.contactNameTextField.setPlaceholderText(contact.getName());
-        binding.contactPhoneTextField.setPlaceholderText(Integer.toString(contact.getPhoneNumber()));
-        binding.contactAgeTextField.setPlaceholderText(Integer.toString(contact.getAge()));
+        binding.contactNameTextField.getEditText().setText(contact.getName()); ;
+        binding.contactPhoneTextField.getEditText().setText(Integer.toString(contact.getPhoneNumber()));
+        binding.contactAgeTextField.getEditText().setText(Integer.toString(contact.getAge()));
     }
 
     @Override
@@ -66,34 +67,48 @@ public class ContactView extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.deleteContact:
-                new MaterialAlertDialogBuilder(getApplicationContext())
-                        .setTitle(R.string.information_dialog)
-                        .setMessage(R.string.information_dialog_text)
-                        .setPositiveButton(R.string.ok, (dialog, which) -> viewModel.deleteContact())
-                        .setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss())
-                        .show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.delete_dialog)
+                        .setMessage(R.string.delete_dialog_text);
+                builder.setPositiveButton(R.string.ok, (dialog, which) -> deleteContact());
+                builder.setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss());
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 break;
             case R.id.createContact:
-                viewModel.setContactName(
-                        binding.contactNameTextField.getEditText().getText().toString());
-                viewModel.setContactPhoneNumber(
-                        Integer.parseInt(
-                                binding.contactPhoneTextField.getEditText().getText().toString()));
-                viewModel.setContactAge(
-                        Integer.parseInt(
-                                binding.contactAgeTextField.getEditText().getText().toString()));
-                if (viewModel.saveContact()) {
-                    finish();
-                } else {
-                    new MaterialAlertDialogBuilder(getApplicationContext())
-                            .setTitle(R.string.information_dialog)
-                            .setMessage(R.string.information_dialog_text)
-                            .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
-                            .show();
+                try {
+                    String name = binding.contactNameTextField.getEditText().getText().toString();
+                    int phone = Integer.parseInt(binding.contactPhoneTextField
+                            .getEditText().getText().toString());
+                    int age = Integer.parseInt(binding.contactAgeTextField
+                            .getEditText().getText().toString());
+                    viewModel.setContactName(name);
+                    viewModel.setContactPhoneNumber(phone);
+                    viewModel.setContactAge(age);
+                    if (viewModel.saveContact()) {
+                        finish();
+                    }
+                    //We catch this Exception because this would happen when the user didn't write
+                    // anything in the Phone or Age TextFields, so we use it to show an alert.
+                }   catch (NumberFormatException e) {
+                    AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+                    builder2.setTitle(R.string.info_not_filled)
+                            .setMessage(R.string.info_not_filled_text);
+                    builder2.setPositiveButton(R.string.ok, (dialog2, which) -> dialog2.dismiss());
+                    AlertDialog dialog2 = builder2.create();
+                    dialog2.show();
                 }
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * This method calls the ViewModel to remove the current Contact and finish the Activity
+     */
+    private void deleteContact() {
+        viewModel.deleteContact();
+        finish();
     }
 
     @Override

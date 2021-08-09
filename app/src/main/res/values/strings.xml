@@ -8,4 +8,8 @@
     <string name="information_dialog_text">There isn\'t new information to save</string>
     <string name="no">No</string>
     <string name="ok">OK</string>
+    <string name="info_not_filled">Error</string>
+    <string name="info_not_filled_text">You didn\'t completed all TextFields</string>
+    <string name="delete_dialog">Delete</string>
+    <string name="delete_dialog_text">Are you sure you want to remove this Contact?</string>
 </resources>

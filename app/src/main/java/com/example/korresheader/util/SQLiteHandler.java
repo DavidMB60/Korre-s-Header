@@ -99,8 +99,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     public void deleteContact(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         // Define 'where' part of query.
-        String selection = FeedEntry.COLUMN_NAME_TITLE + " LIKE " + name;
-        db.delete(FeedEntry.TABLE_NAME, selection, null);
+        db.execSQL("DELETE FROM " + FeedEntry.TABLE_NAME
+                + " WHERE " + FeedEntry.COLUMN_NAME_TITLE + " LIKE '" + name + "%';");
         db.close();
     }
 
