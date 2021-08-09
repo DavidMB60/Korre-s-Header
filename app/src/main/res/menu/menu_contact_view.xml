@@ -8,6 +8,6 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/overwriteContact"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@android:drawable/ic_menu_save"
         app:showAsAction="always" />
 </menu>
